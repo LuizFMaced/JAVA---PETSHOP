@@ -1,0 +1,147 @@
+-SELECT AVANÇADO TABELA 'DEPENDENTES':
+
+SELECT D.cod_dependente CÓDIGO,
+	   D.nome_dependente NOME,
+       S.desc_sexo SEXO,
+       D.obs_dependente OBS,
+       D.cel_dependente CELULAR,
+       D.email_dependente EMAIL,
+       D.cod_cpf CPF,
+       P.tipo_cpf TIPO,
+       R.cod_rg RG,
+       D.cod_cep CEP,
+       E.endereco ENDEREÇO,
+       D.num_resid N°,
+       C.nome_cliente CLIENTE,
+       A.nome_animal ANIMAL
+FROM   dependentes D,
+	   codigo_pessoa_fisica P,
+       registro_geral R,
+       enderecos E,
+       sexo S,
+       clientes C,
+       animais A
+WHERE  D.cod_sexo=S.cod_sexo
+AND	   D.cod_cpf=P.cod_cpf
+AND    D.cod_rg=R.cod_rg
+AND    D.cod_cep=E.cod_cep
+AND    D.cod_cliente=C.cod_cliente
+AND    D.cod_animal=A.cod_animal
+
+
+-COM INNER JOIN:
+SELECT D.cod_dependente CÓDIGO,
+	   D.nome_dependente NOME,
+       S.cod_sexo SEXO,
+       D.obs_dependente OBS,
+       D.cel_dependente CELULAR,
+       D.email_dependente EMAIL,
+       D.cod_cpf CPF,
+       P.tipo_cpf TIPO,
+       R.cod_rg RG,
+       D.cod_cep CEP,
+       E.endereco ENDEREÇO,
+       D.num_resid N°,
+       C.nome_cliente CLIENTE,
+       A.nome_animal ANIMAL
+FROM   dependentes D
+INNER JOIN sexo S ON D.cod_sexo=S.cod_sexo
+INNER JOIN codigo_pessoa_fisica P ON  D.cod_cpf=P.cod_cpf
+INNER JOIN registro_geral R ON D.cod_rg=R.cod_rg
+INNER JOIN enderecos E ON D.cod_cep=E.cod_cep
+INNER JOIN clientes C ON D.cod_cliente=C.cod_cliente
+INNER JOIN animais A ON D.cod_animal=A.cod_animal 
+
+-FUNFOU:
+SELECT C.NOME_CLIENTE, 
+	D.NOME_DEPENDENTE,
+	A.NOME_ANIMAL, 
+	a.idade_animal,
+	 r.nome_raca, 
+	e.desc_especie
+FROM 	CLIENTES C,
+ 	ANIMAIS A, 
+	racas r, 
+	especies e,
+    dependentes D 
+WHERE 	A.COD_ESPECIE=E.COD_ESPECIE 
+AND 	A.cod_raca=R.cod_raca
+
+SELECT C.NOME_CLIENTE, 
+	
+D.NOME_DEPENDENTE,
+	
+A.NOME_ANIMAL, 
+	
+a.idade_animal,
+	 
+r.nome_raca, 
+	
+e.desc_especie
+FROM 	
+CLIENTES C
+
+INNER JOIN dependentes D ON C.cod_dependente=D.cod_dependente
+
+INNER JOIN animais A ON C.cod_animal=A.cod_animal
+
+INNER JOIN  especies E ON A.COD_ESPECIE=E.COD_ESPECIE 
+
+INNER JOIN  racas R  ON A.cod_raca=R.cod_raca
+
+WHERE C.cod_cliente LIKE 1
+
+
+SELECT C.NOME_CLIENTE, 
+       D.NOME_DEPENDENTE,
+       A.NOME_ANIMAL, 
+       A.idade_animal,
+       R.nome_raca, 
+       E.desc_especie
+FROM 	CLIENTES AS C
+INNER JOIN ANIMAIS AS A 
+ON C.cod_animal=A.COD_ANIMAL
+INNER JOIN  dependentes AS D 
+ON C.COD_DEPENDENTE=D.COD_DEPENDENTE
+INNER JOIN especies AS E    
+ON A.COD_ESPECIE=E.COD_ESPECIE 
+INNER JOIN racas AS R 
+ON	A.cod_raca=R.cod_raca
+WHERE C.COD_CLIENTE = 1
+
+-ADD FOREIGN KEY (MODELO):
+
+ALTER TABLE `clientes` ADD CONSTRAINT `fk2_clientes` FOREIGN KEY ( `cod_animal` ) REFERENCES `animais` ( `cod_animal`)
+
+ALTER TABLE `dependentes` 
+ADD CONSTRAINT `fk3_depedentes` 
+FOREIGN KEY ( `cod_cpf` ) REFERENCES `codigo_pessoa_fisica` ( `cod_cpf`),
+
+ADD CONSTRAINT `fk4_depedentes` 
+FOREIGN KEY ( `cod_rg` ) REFERENCES `registro_geral` ( `cod_rg`),
+
+ADD CONSTRAINT `fk5_depedentes` 
+FOREIGN KEY ( `cod_cep` ) REFERENCES `enderecos` ( `cod_cep`),
+
+ADD CONSTRAINT `fk6_depedentes` 
+FOREIGN KEY ( `cod_sexo` ) REFERENCES `sexo` ( `cod_sexo`)
+
+
+FUNFOU INNER JOIN:
+SELECT A.NOME_ANIMAL, 
+	   
+R.NOME_RACA,
+	   
+E.DESC_ESPECIE	
+
+FROM ANIMAIS A
+
+
+INNER JOIN RACAS R ON A.COD_RACA=R.COD_RACA
+
+INNER JOIN ESPECIES E ON A.cod_especie=E.cod_especie
+
+WHERE  A.COD_ANIMAL LIKE 1
+
+AND R.COD_RACA LIKE 2
+AND E.cod_especie LIKE 1
